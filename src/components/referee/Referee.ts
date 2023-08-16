@@ -114,20 +114,33 @@ export default class Referee{
 
                 if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y){
                     let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y + i};
-                    if(this.tileIsOccupied(passedPosition, boardState)){
-                        break;
+                    // Check if file is destination tile
+                    if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y){
+                        // Dealing with destination tile
+                        if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                            return true;
+                        }
+                    }else{
+                        // Dealing with passing tile
+                        if(this.tileIsOccupied(passedPosition , boardState)){
+                            break;
+                        }
                     }
-                }
-                if(desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i){
-                    return true;
                 }
             
             // Bottom right movement
                 
             if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y){
                 let passedPosition: Position = {x: initialPosition.x + i , y: initialPosition.y - i};
-                if(this.tileIsOccupied(passedPosition, boardState)){
-                    break;
+                if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y){
+                    // Dealing with destination tile
+                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                        return true;
+                    }
+                }else{
+                    if(this.tileIsOccupied(passedPosition, boardState)){
+                        break;
+                    }
                 }
             }
                 if(desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === -i){
@@ -137,8 +150,15 @@ export default class Referee{
              // Bottom left movement
              if(desiredPosition.x < initialPosition.x && desiredPosition.y < initialPosition.y){
                 let passedPosition: Position = {x: initialPosition.x - i , y: initialPosition.y - i};
-                if(this.tileIsOccupied(passedPosition, boardState)){
-                    break;
+                if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y){
+                    // Dealing with destination tile
+                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                        return true;
+                    }
+                }else{
+                    if(this.tileIsOccupied(passedPosition, boardState)){
+                        break;
+                    }
                 }
             }
                 
@@ -150,13 +170,18 @@ export default class Referee{
                 
             if(desiredPosition.x < initialPosition.x && desiredPosition.y > initialPosition.y){
                 let passedPosition: Position = {x: initialPosition.x - i , y: initialPosition.y + i};
-                if(this.tileIsOccupied(passedPosition, boardState)){
-                    break;
+                if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y){
+                    // Dealing with destination tile
+                    if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                        return true;
+                    }
+                }else{
+                    if(this.tileIsOccupied(passedPosition, boardState)){
+                        break;
+                    }
                 }
             }
-                if(desiredPosition.x - initialPosition.x === -i && desiredPosition.y - initialPosition.y === i){
-                    return true;
-                }
+                
             }
         }
         return false;

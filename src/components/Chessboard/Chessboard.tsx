@@ -135,8 +135,27 @@ function dropPiece(e : React.MouseEvent){
             const validMove = referee.isValidMove(gridX, gridY , x, y , currentPiece.type, currentPiece.team ,pieces);
             
             const isEnPassantMove = referee.isEnPassantMove(gridX, gridY, x , y , currentPiece.type, currentPiece.team, pieces);
+            const pawnDirection = currentPiece.team === TeamType.OUR ? 1 : -1;
 
-            if(validMove){
+            if(isEnPassantMove){
+                const updatesPieces = pieces.reduce((results , piece) =>{
+                    if(piece.x === gridX && piece.y === gridY){
+                        piece.enPassant = false;
+                        piece.x = x;
+                        piece.y = y;
+                        results.push(piece);
+                    }else if(!(piece.x === x && piece.y === y - pawnDirection)){
+                        if(piece.type === PieceType.PAWN){
+                            piece.enPassant = false;
+                        }
+                        results.push(piece)
+                    }
+
+                    return results;
+                },[] as Piece[])
+
+                setPieces(updatesPieces);
+            }else if(validMove){
                 // UPDATES THE PIECE POSITION   
                 // AND IF PIECE IS ATTACKED REMOVES IT  
                 

@@ -106,6 +106,37 @@ export default class Referee{
                     }
                 }
             }
+        } else if(type = PieceType.BISHOP){
+            // MOVEMENT LOGIC & ATTACK LOGIC
+
+            // Up right movemennt
+            for(let i = 1 ; i < 8 ; i++ ){
+                if(desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i){
+                    break;
+                }
+            }
+
+            // Bottom right movement
+            for(let i = 1 ; i < 8 ; i++ ){
+                if(desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === -i){
+                    break;
+                }
+            }
+
+             // Bottom left movement
+             for(let i = 1 ; i < 8 ; i++ ){
+                if(desiredPosition.x - initialPosition.x === -i && desiredPosition.y - initialPosition.y === -i){
+                    break;
+                }
+            }
+
+            // Bottom left movement
+            for(let i = 1 ; i < 8 ; i++ ){
+                if(desiredPosition.x - initialPosition.x === -i && desiredPosition.y - initialPosition.y === i){
+                    break;
+                }
+            }
+            
         }
         return false;
     }

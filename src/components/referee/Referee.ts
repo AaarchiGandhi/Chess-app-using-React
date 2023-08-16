@@ -82,7 +82,7 @@ export default class Referee{
                     return true;
                 }
             }
-        }   else if(type === PieceType.KNIGHT){
+        } else if(type === PieceType.KNIGHT){
 
             //MOVING LOGIC FOR KNIGHT
             for(let i = -1; i < 2; i+=2){
@@ -106,7 +106,7 @@ export default class Referee{
                     }
                 }
             }
-        } else if(type = PieceType.BISHOP){
+        } else if(type === PieceType.BISHOP){
             // MOVEMENT LOGIC & ATTACK LOGIC
 
             // Up right movemennt
@@ -183,6 +183,26 @@ export default class Referee{
             }
                 
             }
+        } else if(type ===  PieceType.ROOK){
+            if(initialPosition.x === desiredPosition.y){
+                    for(let i = 1 ; i < 8 ; i++){
+                        let multiplier = (desiredPosition.y < initialPosition.y) ? -1 : 1;
+                        let passedPosition: Position = {x: initialPosition.x  , y : initialPosition.y + (i * multiplier)};
+                        if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y){
+                            break;
+                        }
+                    }
+            }
+
+            if(initialPosition.y === desiredPosition.y){
+                    for(let i = 1 ; i < 8 ; i++){
+                        let multiplier = (desiredPosition.y < initialPosition.y) ? -1 : 1;
+                        let passedPosition: Position = {x: initialPosition.x + (i * multiplier) , y : initialPosition.y };
+                        if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y){
+                            break;
+                        }
+                    }
+                }
         }
         return false;
     }

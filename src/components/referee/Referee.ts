@@ -218,6 +218,98 @@ export default class Referee{
 
         return false;
     }
+
+    queenMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean{
+        
+        for(let i = 1 ; i < 8 ; i++){
+        // Vertical
+        if(desiredPosition.x === initialPosition.x ){
+            let multiplier = (desiredPosition.y < initialPosition.y) ? -1 : 1;
+            let passedPosition: Position = {x: initialPosition.x, y: initialPosition.y + (i * multiplier)};
+            if(samePosition(passedPosition, desiredPosition)){
+                if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                    return true;
+                }
+            }else{
+                if(this.tileIsOccupied(passedPosition, boardState)){
+                    break;
+                }
+            }
+        }
+        // Horizontal
+        if(desiredPosition.y === initialPosition.y ){
+            let multiplier = (desiredPosition.x < initialPosition.x) ? -1 : 1;
+            let passedPosition: Position = {x: initialPosition.x + (i * multiplier), y: initialPosition.y};
+            if(samePosition(passedPosition, desiredPosition)){
+                if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                    return true;
+                }
+            }else{
+                if(this.tileIsOccupied(passedPosition, boardState)){
+                    break;
+                }
+            }
+        }
+
+        // BOTTOM RIGHT
+        if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y){
+            let passedPosition: Position = {x: initialPosition.x+i, y: initialPosition.y-i};
+            if(samePosition(passedPosition, desiredPosition)){
+                if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                    return true;
+                }
+            }else{
+                if(this.tileIsOccupied(passedPosition, boardState)){
+                    break;
+                }
+            }
+        }
+
+        // BOTTOM LEFT
+        if(desiredPosition.x < initialPosition.x && desiredPosition.y < initialPosition.y){
+            let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y-i};
+            if(samePosition(passedPosition, desiredPosition)){
+                if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                    return true;
+                }
+            }else{
+                if(this.tileIsOccupied(passedPosition, boardState)){
+                    break;
+                }
+            }
+        }
+
+        // TOP LEFT
+        if(desiredPosition.x < initialPosition.x && desiredPosition.y > initialPosition.y){
+            let passedPosition: Position = {x: initialPosition.x - i, y: initialPosition.y + i};
+            if(samePosition(passedPosition, desiredPosition)){
+                if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                    return true;
+                }
+            }else{
+                if(this.tileIsOccupied(passedPosition, boardState)){
+                    break;
+                }
+            }
+        }
+
+        // TOP RIGHT
+        if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y){
+            let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y + i};
+            if(samePosition(passedPosition, desiredPosition)){
+                if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)){
+                    return true;
+                }
+            }else{
+                if(this.tileIsOccupied(passedPosition, boardState)){
+                    break;
+                }
+            }
+        }
+    }
+
+        return false;
+    }
      
     isValidMove(
         initialPosition: Position, 
@@ -240,6 +332,9 @@ export default class Referee{
                     break;
                 case PieceType.ROOK:
                     validMove = this.rookMove(initialPosition, desiredPosition, team, boardState);
+                    break;
+                case PieceType.QUEEN:
+                    validMove = this.queenMove(initialPosition, desiredPosition, team, boardState);
 
             }
             

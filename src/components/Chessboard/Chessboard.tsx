@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import Tile from '../Tile/Tile';
 import './Chessboard.css';
-import Referee from '../referee/Referee';
 import { HORIZONTAL_AXIS, VERTICAL_AXIS,GRID_SIZE, Piece, TeamType, PieceType, initialBoardState , Position, samePosition} from '../../constants';
+import Referee from '../../referee/Referee';
 
 export default function Chessboard(){
     const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);

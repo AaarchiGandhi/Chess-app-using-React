@@ -3,6 +3,7 @@ import Tile from '../Tile/Tile';
 import './Chessboard.css';
 import { HORIZONTAL_AXIS, VERTICAL_AXIS,GRID_SIZE, Piece, TeamType, PieceType, initialBoardState , Position, samePosition} from '../../constants';
 import Referee from '../../referee/Referee';
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 export default function Chessboard(){
     const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
@@ -12,9 +13,18 @@ export default function Chessboard(){
     const chessboardRef = useRef<HTMLDivElement>(null);
     const modalRef = useRef<HTMLDivElement>(null); 
     const referee = new Referee();
-   
+
+function updateValidMoves(){
+    setPieces((currentPieces) => {
+        return currentPieces.map(p => {
+            p.possibleMoves = referee.getValidMoves(p , currentPieces);
+            return p;
+        });
+    });
+}
 
 function grabPiece(e: React.MouseEvent){
+    updateValidMoves();
     const element = e.target as HTMLElement;
     const chessboard = chessboardRef.current;
     if(element.classList.contains("chess-piece") && chessboard){
@@ -214,7 +224,10 @@ function dropPiece(e : React.MouseEvent){
             const piece = pieces.find(p => samePosition(p.position, {x: i, y: j}));
             let image = piece ? piece.image : undefined;
 
-            board.push(<Tile key = {`${j},${i}`} image = {image} number= {number} />)
+            let currentPiece = activePiece != null ? pieces.find(p => samePosition(p.position, grabPosition)) : undefined;
+            let highlight = currentPiece?.possibleMoves ? currentPiece.possibleMoves.some(p => samePosition(p, {x: i, y : j})) : false;
+
+            board.push(<Tile key = {`${j},${i}`} image = {image} number= {number} highlight = {highlight}/>)
         }
     }
     return (

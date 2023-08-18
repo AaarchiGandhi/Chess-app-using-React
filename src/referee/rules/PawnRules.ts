@@ -4,7 +4,7 @@ import { tileIsOccupied, tileIsOccupiedByOpponent } from "./GeneralRles";
 
 export const pawnMove = (initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean =>{
     const specialRow = (team === TeamType.OUR) ? 1 : 6;
-        const pawnDirection = (team === TeamType.OUR) ? 1 : -1;
+    const pawnDirection = (team === TeamType.OUR) ? 1 : -1;
 
         //MOVEMENT LOGIC
 
@@ -33,4 +33,23 @@ export const pawnMove = (initialPosition: Position, desiredPosition: Position, t
         }
 
     return false;
+}
+
+export const GetPossiblePawnMoves = (pawn: Piece, boardState: Piece[]) : Position[] => {
+    const possibleMoves: Position[] = [];
+    const specialRow = (pawn.team === TeamType.OUR) ? 1 : 6;
+    const pawnDirection = (pawn.team === TeamType.OUR) ? 1 : -1;
+
+    if(!tileIsOccupied({x: pawn.position.x, y: pawn.position.x + pawnDirection}
+        , boardState))
+
+        {
+        possibleMoves.push({x: pawn.position.x, y: pawn.position.y + pawnDirection });
+        if(pawn.position.y === specialRow && !tileIsOccupied({x: pawn.position.x, y: pawn.position.x + pawnDirection * 2}
+            , boardState))
+            {
+                possibleMoves.push({x: pawn.position.x, y: pawn.position.y + pawnDirection * 2});
+            }
+        }
+    return possibleMoves;
 }

@@ -1,5 +1,5 @@
-import { Piece, TeamType, PieceType, initialBoardState, Position, samePosition } from '../constants';
-import { bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from './rules';
+import { Piece, TeamType, PieceType, Position } from '../constants';
+import { GetPossiblePawnMoves, bishopMove, kingMove, knightMove, pawnMove, queenMove, rookMove } from './rules';
 
 export default class Referee{
 
@@ -50,5 +50,15 @@ export default class Referee{
             }
             
         return validMove;
+    }
+
+    getValidMoves(piece : Piece , boardState: Piece[]) : Position[]{
+        switch(piece.type){
+            case PieceType.PAWN:
+                return GetPossiblePawnMoves(piece, boardState);
+
+            default:
+                return[];
+        }
     }
 }

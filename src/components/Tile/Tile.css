@@ -33,3 +33,12 @@
 .tile img{
     width : 80px;
 }
+
+.tile-highlight.chess-piece-tile::before{
+    position: absolute;
+    content: " ";
+    width : 90px;
+    height : 90px;
+    border: 5px solid rgba(0,0,0,0.4);
+    border-radius: 50%;
+}

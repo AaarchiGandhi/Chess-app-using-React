@@ -36,3 +36,65 @@ if(initialPosition.y === desiredPosition.y){
 
     return false;
 }
+
+export const getPossibleRookMoves = (rook : Piece, boardState: Piece[]) : Position[] => {
+    const possibleMoves : Position[] = [];
+
+    // TOP MOVEMENT
+    for(let i = 1 ; i < 8 ; i++ ){
+        const destination: Position = {x: rook.position.x, y: rook.position.y + i };
+
+        if(!tileIsOccupied(destination, boardState)){
+            possibleMoves.push(destination);
+        }else if(tileIsEmptyOrOccupiedByOpponent(destination, boardState, rook.team)){
+            possibleMoves.push(destination);
+            break;
+        }else{
+            break;
+        }
+    }
+
+    // BOTTOM MOVEMENT
+    for(let i = 1 ; i < 8 ; i++ ){
+        const destination: Position = {x: rook.position.x, y: rook.position.y - i };
+
+        if(!tileIsOccupied(destination, boardState)){
+            possibleMoves.push(destination);
+        }else if(tileIsEmptyOrOccupiedByOpponent(destination, boardState, rook.team)){
+            possibleMoves.push(destination);
+            break;
+        }else{
+            break;
+        }
+    }
+
+    // RIGHT MOVEMENT
+    for(let i = 1 ; i < 8 ; i++ ){
+        const destination: Position = {x: rook.position.x + i, y: rook.position.y };
+
+        if(!tileIsOccupied(destination, boardState)){
+            possibleMoves.push(destination);
+        }else if(tileIsEmptyOrOccupiedByOpponent(destination, boardState, rook.team)){
+            possibleMoves.push(destination);
+            break;
+        }else{
+            break;
+        }
+    }
+
+    // LEFT MOVEMENT
+    for(let i = 1 ; i < 8 ; i++ ){
+        const destination: Position = {x: rook.position.x - i, y: rook.position.y };
+
+        if(!tileIsOccupied(destination, boardState)){
+            possibleMoves.push(destination);
+        }else if(tileIsEmptyOrOccupiedByOpponent(destination, boardState, rook.team)){
+            possibleMoves.push(destination);
+            break;
+        }else{
+            break;
+        }
+    }
+
+    return possibleMoves;
+}

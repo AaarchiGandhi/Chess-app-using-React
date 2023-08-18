@@ -80,3 +80,66 @@ export const bishopMove = (initialPosition: Position, desiredPosition: Position,
        }
        return false;
 }
+
+export const getPossibleBishopMoves = (bishop : Piece, boardState: Piece[]) :Position[] =>{
+    const possibleMoves : Position[] = [];
+
+    // Upper Right Movement
+    for(let i = 1 ; i < 8 ; i++ ){
+        const destination: Position = {x: bishop.position.x + i, y: bishop.position.y + i};
+
+        if(!tileIsOccupied(destination, boardState)){
+            possibleMoves.push(destination);
+        }else if(tileIsEmptyOrOccupiedByOpponent(destination, boardState, bishop.team)){
+            possibleMoves.push(destination);
+            break;
+        }else{
+            break;
+        }
+    }    
+
+    // Upper Left Movement
+    for(let i = 1 ; i < 8 ; i++ ){
+        const destination: Position = {x: bishop.position.x - i, y: bishop.position.y + i};
+
+        if(!tileIsOccupied(destination, boardState)){
+            possibleMoves.push(destination);
+        }else if(tileIsEmptyOrOccupiedByOpponent(destination, boardState, bishop.team)){
+            possibleMoves.push(destination);
+            break;
+        }else{
+            break;
+        }
+    }    
+
+    // Bottom Left Movement
+    for(let i = 1 ; i < 8 ; i++ ){
+        const destination: Position = {x: bishop.position.x - i, y: bishop.position.y - i};
+
+        if(!tileIsOccupied(destination, boardState)){
+            possibleMoves.push(destination);
+        }else if(tileIsEmptyOrOccupiedByOpponent(destination, boardState, bishop.team)){
+            possibleMoves.push(destination);
+            break;
+        }else{
+            break;
+        }
+    }  
+    
+    // Bottom Right Movement
+    for(let i = 1 ; i < 8 ; i++ ){
+        const destination: Position = {x: bishop.position.x + i, y: bishop.position.y - i};
+
+        if(!tileIsOccupied(destination, boardState)){
+            possibleMoves.push(destination);
+        }else if(tileIsEmptyOrOccupiedByOpponent(destination, boardState, bishop.team)){
+            possibleMoves.push(destination);
+            break;
+        }else{
+            break;
+        }
+    }  
+
+
+    return possibleMoves;
+}

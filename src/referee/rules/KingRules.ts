@@ -183,6 +183,7 @@ export const getCastlingMoves = (king: Piece, boardstate: Piece[]): Position[] =
           break;
       }
 
+      
       if(!valid)
         break;
     }

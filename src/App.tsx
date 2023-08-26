@@ -5,6 +5,7 @@ function App() {
   return (
     <div id="app">
         <Referee />
+        <div id = "copyright">©️aarchigandhi</div>
     </div>
   );
 }
